@@ -62,8 +62,15 @@ const $ = (...args) => {
 
     elementCollection.append = (appendParam) => {
       let element;
-      let tag = elementCollection[Object.keys(elementCollection)[0]].outerHTML;
-      tag = tag.substring(1, getPosition(tag, ">", 1));
+      let tag = elementCollection[Object.keys(elementCollection)[0]].localName;
+
+      if (elementCollection[Object.keys(elementCollection)[0]].className != "") {
+        tag = tag + "." + elementCollection[Object.keys(elementCollection)[0]].className
+      }
+
+      if (elementCollection[Object.keys(elementCollection)[0]].id != "") {
+        tag = tag + "#" + elementCollection[Object.keys(elementCollection)[0]].id;
+      }
 
       element = document.querySelector(tag);
       if (typeof appendParam == "function") {
@@ -73,6 +80,24 @@ const $ = (...args) => {
       }
 
     };
+
+    elementCollection.remove = () => {
+      let parentNode = elementCollection[Object.keys(elementCollection)[0]].parentNode;
+      let childSelector = elementCollection[Object.keys(elementCollection)[0]].localName;
+
+      if (elementCollection[Object.keys(elementCollection)[0]].className != "") {
+        childSelector = childSelector + "." + elementCollection[Object.keys(elementCollection)[0]].className
+      }
+
+      if (elementCollection[Object.keys(elementCollection)[0]].id != "") {
+        childSelector = childSelector + "#" + elementCollection[Object.keys(elementCollection)[0]].id;
+      }
+
+      let childNode = document.querySelector(childSelector);
+
+      parentNode.removeChild(childNode)
+
+    }
 
     return elementCollection;
   }

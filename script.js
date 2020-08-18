@@ -5,4 +5,7 @@ $(function () {
   });
 
   $("ul").append($('<li>$("").append()</li>'));
+  setTimeout(() => {
+    $(".removable-element").remove();
+  }, 10000)
 });
